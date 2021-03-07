@@ -2,47 +2,51 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
+  data = [];
+
+  area = {
+    width: "500px",
+    height: "500px",
+    border: "1px solid blue"
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      msg: "Hello",
-      counter: 0,
-      flg: true,
+      list: this.data,
     };
     this.doAction = this.doAction.bind(this);
-
-    // let timer = setInterval(() => {
-    //   this.setState({
-    //     count: this.state.count + 1,
-    //     msg: `count: ${this.state.count}`
-    //   });
-    // }, 1000);
   }
 
   doAction(event) {
+    let x = event.pageX;
+    let y = event.pageY;
+    this.data.push({ x: x, y: y })
+    console.log(this.data)
     this.setState({
-      counter: this.state.counter + 1,
-      msg: `*** count: ${this.state.counter} ***`,
-      flg: !this.state.flg,
+      list: this.data,
     });
   };
+
+  draw(d) {
+    let s = {
+      position: "absolute",
+      left: (d.x - 25) + "px",
+      top: (d.y - 25) + "px",
+      width: "50px",
+      height: "50px",
+      backgroundColor: "#66f3"
+    }
+    return <div style={s}></div>
+  }
 
   render() {
     return <div>
       <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
-        <p className="subtitle">Count Number</p>
-        {this.state.flg ?
-          <div className="alert alert-primary text-center">
-            <p className="h5 mb-5">{this.state.msg}</p>
-            <button className="btn btn-primary" onClick={this.doAction}>Click</button>
-          </div>
-          :
-          <div className="alert alert-danger text-center">
-            <p className="h5 mb-5">{this.state.msg}</p>
-            <button className="btn btn-primary" onClick={this.doAction}>Click</button>
-          </div>
-        }
+        <div style={this.area} onClick={this.doAction}>
+          {this.data.map((value) => this.draw(value))}
+        </div>
       </div>
     </div>
   }
