@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import './App.css';
 
+function AlertMessage() {
+  return <div className="alert alert-primary h5 text-primary">
+    This is Alert Message!
+  </div>
+}
+
+function CardMessage() {
+  return <div className="card p-3 h5 border-primary text-center">
+    This is Card Message!
+  </div>
+}
+
 function App() {
   const [count, setCount] = useState(0);
   const [flug, setFlug] = useState(false);
@@ -15,6 +27,8 @@ function App() {
     <div>
       <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
+        <AlertMessage />
+        <CardMessage />
         <h4 className="my-3">Hooks sample</h4>
         {flug ? 
           <div className="alert alert-primary text-center">
