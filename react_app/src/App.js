@@ -1,49 +1,46 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function AlertMessage() {
+function AlertMessage(props) {
+  const data = ["hello", "welcome", "good-bye"];
+  const actionAlert = () => {
+    const re = data[Math.floor(Math.random() * data.length)];
+    props.setAlert("message: " + re + ".");
+  }
+
   return <div className="alert alert-primary h5 text-primary">
-    This is Alert Message!
+    <h5>{props.alert}</h5>
+    <button onClick={actionAlert} className="btn btn-primary">click me</button>
   </div>
 }
 
-function CardMessage() {
+function CardMessage(props) {
+  const [count, setCount] = useState(0);
+
+  const actionCard = () => {
+    setCount(count + 1);
+    props.setCard("card counter: " + count + " count.")
+  }
   return <div className="card p-3 h5 border-primary text-center">
-    This is Card Message!
+    <h5>{props.card}</h5>
+    <button onClick={actionCard} className="btn btn-primary">click me</button>
   </div>
 }
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [flug, setFlug] = useState(false);
-  const clickFunc = () => {
-    setCount(count + 1);
-  };
-  const changeFlug = (e) => {
-    setFlug(e.target.checked);
-  }
+  const [alert, setAlert] = useState("this is alert message")
+  const [card, setCard] = useState("this is card message")
 
   return (
     <div>
       <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
-        <AlertMessage />
-        <CardMessage />
         <h4 className="my-3">Hooks sample</h4>
-        {flug ? 
-          <div className="alert alert-primary text-center">
-            <p className="h5 mb-3">click: {count} times!</p>
-            <div><button className="btn btn-primary" onClick={clickFunc}>Click me</button></div>
-          </div>
-          :
-          <div className="card p-3 border-primary text-center">
-            <p className="h5 mb-3">click: {count} times!</p>
-            <div><button className="btn btn-primary" onClick={clickFunc}>Click me</button></div>
-          </div>
-        }
-        <div className="form-group h6 text-center pt-3">
-          <input type="checkbox" className="form-check-input" id="check1" onChange={changeFlug} />
-          <label className="form-check-label" htmlFor="check1">Change form style.</label>
+        <AlertMessage alert={alert} setAlert={setAlert}/>
+        <CardMessage card={card} setCard={setCard}/>
+        <div className="text-right">
+          <p>{alert}</p>
+          <p>{card}</p>
         </div>
       </div>
     </div>
