@@ -84,19 +84,37 @@ function AlertMessage(props) {
 }
 
 function App() {
-  const [val, setVal] = useState(0);
-  const [msg, setMsg] = useState("set a number...");
+  const [val, setVal] = useState(1000);
+  const [tax1, setTax1] = useState(0);
+  const [tax2, setTax2] = useState(0);
+  const [msg, setMsg] = useState(<p>set a price...</p>);
 
   const doChange = (event) => {
     setVal(event.target.value);
   }
 
+  // const doAction = () => {
+  //   let res = <div>
+  //     <p>軽減税率（8%）:{ tax1 }円</p>
+  //     <p>軽減税率（10%）:{ tax2 }円</p>
+  //   </div>
+  //   setMsg(res);
+  // }
+
   useEffect(() => {
-    let total = 0;
-    for (let i = 0; i <= val; i++) {
-      total += i;
-    }
-    setMsg("total: " + total + ".");
+    let res = <div>
+      <p>軽減税率（8%）:{tax1}円</p>
+      <p>軽減税率（10%）:{tax2}円</p>
+    </div>
+    setMsg(res);
+  }, [tax1, tax2]);
+
+  useEffect(() => {
+    setTax1(Math.floor(val * 1.08));
+  })
+
+  useEffect(() => {
+    setTax2(Math.floor(val * 1.10));
   })
 
   return (
@@ -107,7 +125,7 @@ function App() {
         <AlertMessage msg={msg}/>
           <div className="form-group">
             <label>Input:</label>
-            <input type="number" className="form-controll" onChange={ doChange }/>
+            <input type="number" className="form-control" onChange={ doChange }/>
           </div>
       </div>
     </div>
