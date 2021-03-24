@@ -1,21 +1,17 @@
-import Header from './header'
+import Layout from '../components/layout'
 import Link from 'next/link'
 
 export default function Home() {
-  const title = "Index";
   return (
     <div>
-      <Header title={title}/>
-      <h1 className="bg-primary text-white display-4">React</h1>
-      <div className="container">
-        <h4 className="my-3　text-primary text-center">{title}</h4>
+      <Layout header="Next.js" title="Top page">
         <div className="card p-3 text-center">
-          <p className="h5">これはページ移動のサンプルです</p>
-          <Link href="/other">
-            <a>Go to Other page &gt;&gt;</a>
+          <h4 className="my-3　text-primary text-center">Welcome to Next.js!</h4>
+          <Link href="./other">
+            <button className="btn btn-primary">Go to Other page &gt;&gt;</button>
           </Link>
         </div>
-      </div>
+      </Layout>
     </div>
   )
 }
