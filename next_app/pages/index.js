@@ -1,17 +1,34 @@
+import {useState} from 'react'
 import Layout from '../components/layout'
-import MyImage from '../components/image'
-import Link from 'next/link'
 
 export default function Home() {
+  const url = './data.json';
+  const [data, setData] = useState({message: '', data: []});
+
+  fetch(url)
+    .then(res => res.json())
+    .then(res => setData(res));
+
+  
   return (
     <div>
       <Layout header="Next.js" title="Top page">
-        <div className="card p-3 text-center">
-          <h4 className="my-3　text-primary text-center">Welcome to Next.js!</h4>
-          <MyImage fname="image.jpg" size="300"/>
-          <Link href="./other">
-            <button className="btn btn-primary">Go to Other page &gt;&gt;</button>
-          </Link>
+        <div className="alert alert-primary text-center">
+          <h5 className="mb-4">{data.message}</h5>
+          <table className="table bg-white">
+            <thead className="table-dark">
+              <tr><th>Name</th><th>Mail</th><th>Age</th></tr>
+            </thead>
+            <tbody>
+              {data.data.map((value, key) => (
+                <tr key={key}>
+                  <th>{value.name}</th>
+                  <td>{value.mail}</td>
+                  <td>{value.age}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Layout>
     </div>
